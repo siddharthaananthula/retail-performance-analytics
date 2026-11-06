@@ -1,0 +1,12 @@
+retail_analytics:
+  target: fixture
+  outputs:
+    fixture:
+      type: postgres
+      host: 127.0.0.1
+      port: "{{ env_var('FIXTURE_PORT', '55439') | int }}"
+      user: retail_fixture_user
+      password: "{{ env_var('FIXTURE_POSTGRES_PASSWORD') }}"
+      dbname: "{{ env_var('FIXTURE_DATABASE', 'retail_fixture_2b') }}"
+      schema: fixture_analytics
+      threads: 1

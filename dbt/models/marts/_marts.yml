@@ -1,0 +1,207 @@
+version: 2
+
+models:
+  - name: dim_day
+    description: "Observed relative transaction days and source reporting weeks; no calendar dates."
+    columns:
+      - name: transaction_day
+        data_tests: [not_null, unique]
+      - name: week_no
+        data_tests: [not_null]
+
+  - name: dim_store
+    description: "Observed store identifiers; no names or geographic attributes are available."
+    columns:
+      - name: store_id
+        data_tests: [not_null, unique]
+
+  - name: dim_product
+    description: "Product dimension for retail sales reporting."
+    columns:
+      - name: product_id
+        description: "Unique identifier for each product."
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fct_sales
+    description: "Transaction-line sales fact model for retail reporting."
+    columns:
+      - name: transaction_day
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_day')
+                field: transaction_day
+      - name: store_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_store')
+                field: store_id
+      - name: basket_id
+        data_tests:
+          - not_null
+
+      - name: product_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_id
+  - name: dim_household
+    description: "All purchasing households with available demographic attributes."
+    columns:
+      - name: household_key
+        description: "Unique household identifier."
+        data_tests:
+          - not_null
+          - unique
+  - name: dim_campaign
+    description: "Campaign dimension for retail analytics reporting."
+    columns:
+      - name: campaign_id
+        description: "Unique campaign identifier."
+        data_tests:
+          - not_null
+          - unique
+
+  - name: bridge_household_campaign
+    description: "Maps households to campaigns that targeted them."
+    columns:
+      - name: household_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_household')
+                field: household_key
+
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_id
+
+  - name: fct_baskets
+    description: "Basket-level sales summary with one row per shopping basket."
+    columns:
+      - name: transaction_day
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_day')
+                field: transaction_day
+      - name: store_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_store')
+                field: store_id
+      - name: basket_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: household_key
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_household')
+                field: household_key
+
+  - name: bridge_coupon_product_campaign
+    description: "Distinct coupon-product-campaign eligibility; never join directly to sales for revenue totals."
+    columns:
+      - name: product_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_id
+      - name: campaign_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_id
+
+  - name: fct_coupon_redemptions
+    description: "Observed redemptions at household-day-coupon-campaign grain; contains no inferred product sale."
+    columns:
+      - name: redemption_day
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_day')
+                field: transaction_day
+      - name: household_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_household')
+                field: household_key
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_campaign')
+                field: campaign_id
+
+  - name: fct_promotion_week
+    description: "One product-store-week row. Multiple source states are retained as counts and any-state flags."
+    columns:
+      - name: product_id
+        data_tests: [not_null]
+      - name: store_id
+        data_tests: [not_null]
+      - name: week_no
+        data_tests: [not_null]
+      - name: has_display
+        description: "At least one nonzero display code observed; code meaning and customer exposure are unverified."
+      - name: has_mailer
+        description: "At least one nonzero mailer code observed; code meaning and customer exposure are unverified."
+
+  - name: fct_sales_promotion
+    description: "Materialized transaction lines with safe weekly promotion indicators; sales_value remains unchanged."
+    columns:
+      - name: basket_id
+        data_tests: [not_null]
+      - name: product_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_id
+      - name: household_key
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_household')
+                field: household_key
+      - name: transaction_day
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_day')
+                field: transaction_day
+      - name: store_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_store')
+                field: store_id
+      - name: has_promotion_record
+        description: "True only when a product-store-week promotion record exists; false means missing data, not confirmed non-exposure."
+      - name: has_display
+        description: "At least one nonzero display code observed for the matched week; not verified customer exposure."
+      - name: has_mailer
+        description: "At least one nonzero mailer code observed for the matched week; not verified customer exposure."
+      - name: has_conflicting_promotion_states
+        description: "More than one display or mailer code existed for the matched product-store-week."

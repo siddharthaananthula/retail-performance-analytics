@@ -1,0 +1,22 @@
+name: ${FIXTURE_PROJECT:-retail_p2b}
+services:
+  postgres:
+    image: postgres:17
+    container_name: ${FIXTURE_CONTAINER:-retail_p2b_postgres}
+    environment:
+      POSTGRES_USER: retail_fixture_user
+      POSTGRES_DB: ${FIXTURE_DATABASE:-retail_fixture_2b}
+      POSTGRES_PASSWORD: ${FIXTURE_POSTGRES_PASSWORD:?Fixture password is required}
+    ports:
+      - "127.0.0.1:${FIXTURE_PORT:-55439}:5432"
+    volumes:
+      - fixture_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U retail_fixture_user -d ${FIXTURE_DATABASE:-retail_fixture_2b}"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+volumes:
+  fixture_pgdata:
+    name: ${FIXTURE_VOLUME:-retail_p2b_pgdata}

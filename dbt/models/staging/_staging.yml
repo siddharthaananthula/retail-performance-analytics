@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: stg_campaign_desc
+    description: "Cleaned campaign descriptions and reporting periods."
+    columns:
+      - name: campaign_id
+        description: "Unique campaign identifier."
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_hh_demographic
+    columns:
+      - name: household_key
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_products
+    columns:
+      - name: product_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_campaign_table
+    columns:
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_campaign_desc')
+                field: campaign_id
+
+  - name: stg_coupon_redempt
+    columns:
+      - name: household_key
+        data_tests:
+          - not_null
+
+      - name: coupon_upc
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_coupon')
+                field: coupon_upc
+
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_campaign_desc')
+                field: campaign_id
+
+  - name: stg_transactions
+    columns:
+      - name: basket_id
+        data_tests:
+          - not_null
+
+      - name: product_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id

@@ -1,0 +1,58 @@
+name: Synthetic pipeline validation
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fixture-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      RETAIL_FIXTURE_ID: ${{ github.run_id }}a${{ github.run_attempt }}
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pipeline dependencies
+        run: python -m pip install -r requirements-pipeline.txt
+
+      - name: Run loader unit tests
+        run: python -m unittest discover -s tests -p 'test_ingest.py' -v
+
+      - name: Run fixture safety unit tests
+        run: python -m unittest tests.test_fixture_ci -v
+
+      - name: Generate fixture-only credentials and identity
+        id: fixture_init
+        run: python tests/integration/run_fixture.py init
+
+      - name: Preflight and start isolated PostgreSQL
+        run: python tests/integration/run_fixture.py start
+
+      - name: Run synthetic ingestion Tests A–E
+        run: python tests/integration/run_fixture.py run
+
+      - name: Build 20 dbt models and pass 73 tests
+        run: python tests/integration/run_fixture.py dbt
+
+      - name: Fixture-only failure diagnostics
+        if: ${{ failure() && steps.fixture_init.outcome == 'success' }}
+        continue-on-error: true
+        run: python tests/integration/run_fixture.py diagnostics
+
+      - name: Remove verified fixture resources
+        if: ${{ always() && steps.fixture_init.outcome == 'success' }}
+        run: python tests/integration/run_fixture.py cleanup

@@ -1,0 +1,58 @@
+# Source data: obtain separately; redistribution rights have not been cleared.
+data/raw/*
+!data/raw/.gitkeep
+/tests/fixtures/*.csv
+
+# Processed/generated data
+data/processed/*
+!data/processed/.gitkeep
+
+# Power BI files requiring a separate publication review
+*.pbix
+*.pbit
+*.abf
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+*.pbix~
+*.tmp
+
+# Environment files
+.env
+.env.*
+.pgpass
+*.pem
+*.p12
+*.pfx
+*.key
+/.dbt/
+/dbt/profiles.local.yml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# dbt generated files
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/.user.yml
+/logs/
+*.log
+
+# Local Docker data
+/postgres_data/
+/volumes/
+*.dump
+*.backup
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

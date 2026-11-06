@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: retail_raw
+    schema: raw
+    tables:
+      - name: campaign_desc
+      - name: campaign_table
+      - name: coupon_redempt
+      - name: hh_demographic
+      - name: product
+      - name: coupon
+      - name: transaction_data
+      - name: causal_data
