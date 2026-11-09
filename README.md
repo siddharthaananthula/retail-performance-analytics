@@ -2,7 +2,7 @@
 
 A supermarket analytics portfolio project using PostgreSQL, dbt and Power BI Desktop. It models sales lines, baskets, coupon redemptions and promotions at their proper grains so reporting does not multiply revenue when a product has several coupon or promotion records.
 
-| Validated result from the local sample | Value |
+| Validated result from the local dataset | Value |
 |---|---:|
 | Transaction lines | 2,595,732 |
 | Recorded sales | $8,057,463.08 |
@@ -24,9 +24,15 @@ flowchart LR
 
 The sales reporting table stays at transaction-line grain. A separate basket fact supports shopping-frequency measures; coupon and campaign bridges describe eligibility or targeting, while the redemption fact records actual use. Power BI relationships run from dimensions to facts in one direction. [Architecture](docs/architecture.md) details grains and relationships.
 
-## Dashboard
+## Power BI dashboard
 
-The local Desktop report has seven business pages: **Executive Overview**, **Customer Behaviour**, **Customer Demographics**, **Promotions & Coupons**, **Supplier & Product Performance**, **Business Insights**, and **Business Recommendations**. The supplier page compares sub-categories and manufacturer IDs, purchasing households, baskets and repeat purchasing. Manufacturer IDs are not verified supplier names. The PBIX is withheld from publication pending review of embedded data and connection settings; there are no published dashboard screenshots yet. The [Power BI folder](powerbi/README.md) explains this publication boundary. See the [dashboard guide](docs/dashboard_guide.md) and [screenshot checklist](screenshots/README.md).
+The local Power BI Desktop report has seven business pages covering sales performance, customers, demographics, coupons and promotions, products and manufacturers, business insights and recommendations. It includes interactive slicers, dynamic Top N rankings, page navigation and report-page tooltips for department and manufacturer performance.
+
+![Executive Overview of the Retail Performance dashboard](screenshots/01-overview.png)
+
+**Explore the dashboard pages:** [Overview](screenshots/01-overview.png) · [Customers](screenshots/02-customers.png) · [Demographics](screenshots/03-demographics.png) · [Promotions](screenshots/04-promotions.png) · [Products](screenshots/05-products.png) · [Insights](screenshots/06-insights.png) · [Recommendations](screenshots/07-recommendations.png).
+
+These screenshots are static previews of the report, not a publicly hosted interactive dashboard. The data-bearing PBIX is withheld from publication pending review of embedded data and connection settings. Original source CSV files are also excluded. See the [Power BI folder](powerbi/README.md), [dashboard guide](docs/dashboard_guide.md) and [screenshot checklist](screenshots/README.md). Manufacturer IDs are not verified supplier names.
 
 ## Reproduce locally
 
@@ -48,7 +54,7 @@ dbt debug --project-dir dbt --profiles-dir dbt
 dbt build --project-dir dbt --profiles-dir dbt
 ```
 
-The loader creates the eight `raw` tables on an empty database and refuses to replace populated tables unless `--replace-existing` is explicitly supplied. Do not use that option when preserving existing data. Compose reads `.env`; the loader and dbt read the shell's `POSTGRES_PASSWORD`. The included dbt profile builds to `analytics`; the previously validated full-data local environment used a separate `dbt_dev` profile. A fresh load and dbt build of the **original full dataset** have not been independently validated end to end. The loader's fresh-load, replacement, rollback and identity safeguards were tested with invented synthetic CSVs; that fixture build passed 20 models and 73 tests. The [synthetic CI workflow](.github/workflows/dbt-quality.yml) exists but has not yet been observed running on GitHub. [Fixture instructions](tests/integration/README.md) explain the isolated tests.
+The loader creates the eight `raw` tables on an empty database and refuses to replace populated tables unless `--replace-existing` is explicitly supplied. Do not use that option when preserving existing data. Compose reads `.env`; the loader and dbt read the shell's `POSTGRES_PASSWORD`. The included dbt profile builds to `analytics`; the previously validated full-data local environment used a separate `dbt_dev` profile. A fresh load and dbt build of the **original full dataset** have not been independently validated end to end. The loader's fresh-load, replacement, rollback and identity safeguards were tested with invented synthetic CSVs; that fixture build passed 20 models and 73 tests. The [GitHub Actions synthetic validation workflow](.github/workflows/dbt-quality.yml) also passed on the initial clean-repository commit (`44c2c1f`). This does not establish production deployment or a new full-dataset rebuild. [Fixture instructions](tests/integration/README.md) explain the isolated tests.
 
 In Power BI Desktop, choose **Get data > PostgreSQL database**, server `127.0.0.1:5432`, database `retail_analytics`, and **Import**. Authenticate as `retail_user` using the local password, then select reporting tables from `analytics` after the build above. Import `fct_sales_promotion` for line-level sales and `fct_baskets` for basket measures; do not sum their sales columns together. [Architecture](docs/architecture.md) lists the recommended relationships.
 
