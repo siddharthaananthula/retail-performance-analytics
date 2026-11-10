@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive, aggregate-only portfolio presentation of the Retail Performance Analytics project.">
+  <meta name="theme-color" content="#14263d">
+  <title>Retail Performance Analytics | Portfolio</title>
+  <link rel="stylesheet" href="assets/dashboard.css">
+  <script src="assets/dashboard.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to dashboard</a>
+  <header class="report-header">
+    <div class="report-brand">
+      <span class="report-mark" aria-hidden="true">RP</span>
+      <h1 id="page-title">Retail Performance Analytics</h1>
+      <span class="header-divider" aria-hidden="true"></span>
+      <span class="report-type">Power BI report</span>
+    </div>
+    <a class="source-link" href="https://github.com/siddharthaananthula/retail-performance-analytics" target="_blank" rel="noopener noreferrer">Source code <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main" class="report-shell">
+    <nav class="section-nav" aria-label="Report pages">
+      <div class="tabs" role="tablist" aria-label="Power BI report pages">
+        <button id="tab-overview" type="button" role="tab" aria-selected="true" aria-controls="overview panel-overview" tabindex="0" data-page="overview">Overview</button>
+        <button id="tab-customers" type="button" role="tab" aria-selected="false" aria-controls="overview panel-customers" tabindex="-1" data-page="customers">Customers</button>
+        <button id="tab-demographics" type="button" role="tab" aria-selected="false" aria-controls="overview panel-demographics" tabindex="-1" data-page="demographics">Demographics</button>
+        <button id="tab-promotions" type="button" role="tab" aria-selected="false" aria-controls="overview panel-promotions" tabindex="-1" data-page="promotions">Promotions</button>
+        <button id="tab-products" type="button" role="tab" aria-selected="false" aria-controls="overview panel-products" tabindex="-1" data-page="products">Products</button>
+        <button id="tab-insights" type="button" role="tab" aria-selected="false" aria-controls="overview panel-insights" tabindex="-1" data-page="insights">Insights</button>
+        <button id="tab-recommendations" type="button" role="tab" aria-selected="false" aria-controls="overview panel-recommendations" tabindex="-1" data-page="recommendations">Recommendations</button>
+      </div>
+    </nav>
+
+    <section id="overview" class="report-viewer" aria-label="Static Power BI report preview">
+      <div class="viewer-toolbar">
+        <div class="viewer-page-label"><span class="viewer-status">STATIC PREVIEW</span><strong id="viewer-title">Executive Overview</strong></div>
+        <button class="viewer-open" type="button" data-screenshot-open aria-label="Enlarge Executive Overview screenshot">Enlarge preview <span aria-hidden="true">⤢</span></button>
+      </div>
+      <button class="preview-frame" type="button" data-screenshot-open aria-label="Open Executive Overview Power BI screenshot at full size">
+        <img id="preview-image" src="assets/screenshots/01-overview.png" alt="Static screenshot preview of the Executive Overview Power BI report page" fetchpriority="high">
+      </button>
+      <div class="viewer-caption">
+        <span>Static screenshot from Power BI Desktop. This is not a live or embedded Power BI report.</span>
+        <span id="viewer-count">Page 1 of 7</span>
+      </div>
+    </section>
+
+    <section class="explore-section" aria-labelledby="explore-title">
+      <div class="explore-heading">
+        <div><p class="eyebrow">Curated aggregate results</p><h2 id="explore-title">Explore the data</h2></div>
+        <p>These custom charts use documented aggregates. They are separate from the static Power BI page previews above; no live slicers or row-level data are exposed.</p>
+      </div>
+
+    <section id="panel-overview" class="page-panel" role="tabpanel" aria-labelledby="tab-overview" tabindex="0" data-panel="overview">
+      <div class="page-heading">
+        <div><p class="eyebrow">01 / Executive overview</p><h2>Retail performance at a glance</h2></div>
+        <p>Validated results from the locally checked sample. Financial values are recorded sales, not profit or margin.</p>
+      </div>
+      <div class="chart-grid">
+        <article class="card chart-card">
+          <div class="card-heading"><div><p class="eyebrow">Brand mix</p><h3>National and Private recorded sales</h3></div></div>
+          <div class="control-row" role="group" aria-label="Brand chart measure">
+            <button type="button" class="toggle-button is-active" aria-pressed="true" data-chart="brandSales" data-mode="sales">Recorded sales</button>
+            <button type="button" class="toggle-button" aria-pressed="false" data-chart="brandSales" data-mode="share">Share of sales</button>
+          </div>
+          <div class="chart-host" data-chart-host="brandSales" aria-live="polite"></div>
+          <p class="chart-note">These are descriptive sales totals. The household counts in related brand analyses overlap and should not be added.</p>
+        </article>
+        <article class="card chart-card">
+          <div class="card-heading"><div><p class="eyebrow">Basket composition</p><h3>Three mutually exclusive basket types</h3></div></div>
+          <div class="control-row" role="group" aria-label="Basket chart measure">
+            <button type="button" class="toggle-button is-active" aria-pressed="true" data-chart="basketMix" data-mode="revenue">Recorded sales</button>
+            <button type="button" class="toggle-button" aria-pressed="false" data-chart="basketMix" data-mode="baskets">Basket count</button>
+            <button type="button" class="toggle-button" aria-pressed="false" data-chart="basketMix" data-mode="average">Avg basket value</button>
+          </div>
+          <div class="chart-host" data-chart-host="basketMix" aria-live="polite"></div>
+          <p class="chart-note">Mixed-brand baskets are larger on average; this association does not establish that brand mixing caused higher spend.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="panel-customers" class="page-panel" role="tabpanel" aria-labelledby="tab-customers" tabindex="0" data-panel="customers" hidden>
+      <div class="page-heading">
+        <div><p class="eyebrow">02 / Customer behaviour</p><h2>Household and basket reach</h2></div>
+        <p>Published brand totals describe how broadly National and Private products appear in the purchasing base.</p>
+      </div>
+      <div class="metric-grid metric-grid-three">
+        <article class="metric-card"><span>Purchasing households</span><strong>2,500</strong><small>Overall validated base</small></article>
+        <article class="metric-card"><span>Households buying National</span><strong>2,500</strong><small>Brand groups can overlap</small></article>
+        <article class="metric-card"><span>Households buying Private</span><strong>2,496</strong><small>Not additive to National</small></article>
+      </div>
+      <article class="card chart-card wide-chart">
+        <div class="card-heading"><div><p class="eyebrow">Brand reach</p><h3>Choose a published reach measure</h3></div></div>
+        <div class="control-row" role="group" aria-label="Customer reach measure">
+          <button type="button" class="toggle-button is-active" aria-pressed="true" data-chart="customerReach" data-mode="households">Purchasing households</button>
+          <button type="button" class="toggle-button" aria-pressed="false" data-chart="customerReach" data-mode="baskets">Baskets containing brand</button>
+        </div>
+        <div class="chart-host" data-chart-host="customerReach" aria-live="polite"></div>
+        <p class="chart-note">National and Private household and basket counts overlap. They must not be added to estimate unique households or baskets.</p>
+      </article>
+      <aside class="callout"><strong>What this does not show</strong><p>The public aggregate results do not provide an approved interactive department or household filter. The local Power BI report has slicers; this website does not simulate them.</p></aside>
+    </section>
+
+    <section id="panel-demographics" class="page-panel" role="tabpanel" aria-labelledby="tab-demographics" tabindex="0" data-panel="demographics" hidden>
+      <div class="page-heading">
+        <div><p class="eyebrow">03 / Customer demographics</p><h2>Coverage is a key part of the story</h2></div>
+        <p>Income-group findings describe only households with a recorded demographic row—not the full purchasing base.</p>
+      </div>
+      <div class="metric-grid metric-grid-three">
+        <article class="metric-card"><span>Known demographics</span><strong>801</strong><small>Of 2,500 purchasing households</small></article>
+        <article class="metric-card"><span>Missing demographics</span><strong>1,699</strong><small>Coverage is incomplete</small></article>
+        <article class="metric-card"><span>Demographic coverage</span><strong>32.04%</strong><small>Interpret subgroup results cautiously</small></article>
+      </div>
+      <article class="card chart-card wide-chart">
+        <div class="card-heading"><div><p class="eyebrow">Coverage check</p><h3>Households with and without demographics</h3></div></div>
+        <div class="chart-host" data-chart-host="demographicCoverage" aria-live="polite"></div>
+        <p class="chart-note">The saved Power BI preview contains income-band detail, including small groups. Those subgroup values are not recreated as interactive charts here.</p>
+      </article>
+      <div class="callout warning-callout"><strong>Read with care</strong><p>Income-group averages are descriptive. A subset covering 32.04% of purchasing households cannot be generalised to all customers; very small groups should not be over-interpreted.</p></div>
+    </section>
+
+    <section id="panel-promotions" class="page-panel" role="tabpanel" aria-labelledby="tab-promotions" tabindex="0" data-panel="promotions" hidden>
+      <div class="page-heading">
+        <div><p class="eyebrow">04 / Promotions and coupons</p><h2>Measure coverage before effectiveness</h2></div>
+        <p>Redemptions are observed events. A missing product-store-week promotion match is unknown—not evidence that a customer was not exposed.</p>
+      </div>
+      <div class="metric-grid metric-grid-three">
+        <article class="metric-card"><span>Coupon redemption rows</span><strong>2,318</strong><small>Observed redemption fact</small></article>
+        <article class="metric-card"><span>Lines with a promotion record</span><strong>563,774</strong><small>21.7% of transaction lines</small></article>
+        <article class="metric-card"><span>Lines with unknown status</span><strong>2,031,958</strong><small>78.3% lack a matching record</small></article>
+      </div>
+      <article class="card chart-card wide-chart">
+        <div class="card-heading"><div><p class="eyebrow">Record coverage</p><h3>Promotion matches in the transaction-line fact</h3></div></div>
+        <div class="control-row" role="group" aria-label="Promotion coverage measure">
+          <button type="button" class="toggle-button is-active" aria-pressed="true" data-chart="promotionCoverage" data-mode="share">Share of lines</button>
+          <button type="button" class="toggle-button" aria-pressed="false" data-chart="promotionCoverage" data-mode="count">Line count</button>
+        </div>
+        <div class="chart-host" data-chart-host="promotionCoverage" aria-live="polite"></div>
+        <p class="chart-note">There are 15,245 product-store-week keys with conflicting source promotion states. Promotion code meanings are unverified.</p>
+      </article>
+      <div class="callout warning-callout"><strong>No uplift or ROI claim</strong><p>These records support a coverage check, not a causal promotion-effect estimate. The original campaign ranking is available only in the static Power BI screenshot preview.</p></div>
+    </section>
+
+    <section id="panel-products" class="page-panel" role="tabpanel" aria-labelledby="tab-products" tabindex="0" data-panel="products" hidden>
+      <div class="page-heading">
+        <div><p class="eyebrow">05 / Supplier and product performance</p><h2>Compare brand revenue in Grocery</h2></div>
+        <p>Use the supported aggregate comparison; no product-level or manufacturer ranking filter is recreated here.</p>
+      </div>
+      <article class="card chart-card wide-chart">
+        <div class="card-heading"><div><p class="eyebrow">Grocery only</p><h3>Recorded sales by brand classification</h3></div></div>
+        <div class="control-row" role="group" aria-label="Grocery sales measure">
+          <button type="button" class="toggle-button is-active" aria-pressed="true" data-chart="groceryBrand" data-mode="sales">Recorded sales</button>
+          <button type="button" class="toggle-button" aria-pressed="false" data-chart="groceryBrand" data-mode="share">Share of Grocery sales</button>
+        </div>
+        <div class="chart-host" data-chart-host="groceryBrand" aria-live="polite"></div>
+        <p class="chart-note">These are revenue comparisons, not price, margin or preference measures. Household counts by brand overlap.</p>
+      </article>
+      <aside class="callout"><strong>Manufacturer identifiers are not supplier names</strong><p>Manufacturer ID 69 has $2,178,431.70 recorded revenue (27.04% of all sales), but its commercial identity is unverified. It is not labelled as a company here.</p></aside>
+    </section>
+
+    <section id="panel-insights" class="page-panel" role="tabpanel" aria-labelledby="tab-insights" tabindex="0" data-panel="insights" hidden>
+      <div class="page-heading">
+        <div><p class="eyebrow">06 / Business insights</p><h2>Mixed-brand baskets are larger</h2></div>
+        <p>Both-brand baskets represent 57.0% of baskets and 80.28% of sales. Their larger basket size is an association—not proof of cause.</p>
+      </div>
+      <div class="insight-layout">
+        <div class="insight-stat card"><span class="eyebrow">Recorded sales from mixed-brand baskets</span><strong>$6.47M</strong><p>$6,468,441.00 across 157,546 baskets.</p></div>
+        <article class="card chart-card">
+          <div class="card-heading"><div><p class="eyebrow">Basket composition</p><h3>Compare the documented measures</h3></div></div>
+          <div class="control-row" role="group" aria-label="Basket composition measure">
+            <button type="button" class="toggle-button is-active" aria-pressed="true" data-chart="basketComposition" data-mode="baskets">Basket count</button>
+            <button type="button" class="toggle-button" aria-pressed="false" data-chart="basketComposition" data-mode="revenue">Recorded sales</button>
+            <button type="button" class="toggle-button" aria-pressed="false" data-chart="basketComposition" data-mode="average">Avg basket value</button>
+          </div>
+          <div class="chart-host" data-chart-host="basketComposition" aria-live="polite"></div>
+        </article>
+      </div>
+      <div class="callout"><strong>Interpretation</strong><p>Mixed-brand baskets average 14.58 lines, compared with 3.09 in National-only baskets and 1.27 in Private-only baskets. Larger shopping missions explain the observed concentration; brand mixing itself has not been shown to increase spend.</p></div>
+    </section>
+
+    <section id="panel-recommendations" class="page-panel" role="tabpanel" aria-labelledby="tab-recommendations" tabindex="0" data-panel="recommendations" hidden>
+      <div class="page-heading">
+        <div><p class="eyebrow">07 / Business recommendations</p><h2>Next steps grounded in evidence</h2></div>
+        <p>These are opportunities to investigate—not claimed financial improvements or proven causal effects.</p>
+      </div>
+      <div class="recommendation-list">
+        <article class="recommendation-card"><span class="recommendation-number">01</span><div><h3>Investigate Private-label opportunities in Grocery</h3><p class="evidence">Evidence: Private Grocery recorded $1,105,832.67 (27.01% of Grocery sales); 2,490 households bought Private Grocery products.</p><p>Compare like-for-like products, price, availability and gross margin before considering a controlled merchandising or promotion test. Track revenue share and margin against a suitable comparison.</p></div></article>
+        <article class="recommendation-card"><span class="recommendation-number">02</span><div><h3>Explore basket-building opportunities</h3><p class="evidence">Evidence: mixed-brand baskets are 57.0% of baskets and 80.28% of sales, with 14.58 lines per basket.</p><p>Investigate co-purchased categories and test relevant placement or combinations only where stock and margin data support it. Compare against a control; do not treat current basket differences as incremental lift.</p></div></article>
+        <article class="recommendation-card"><span class="recommendation-number">03</span><div><h3>Improve promotion data quality before uplift analysis</h3><p class="evidence">Evidence: 78.3% of lines have no matching promotion record, and 15,245 product-store-week keys have conflicting states.</p><p>Reconcile mappings, resolve conflicts and verify code definitions before defining exposure. Better coverage is necessary, but it does not by itself establish causality.</p></div></article>
+      </div>
+      <aside class="callout warning-callout"><strong>Important limitations</strong><p>The analysis does not provide verified product margins, causal impact, promotion uplift or return on investment. Days and weeks are relative; store IDs have no verified locations; manufacturer IDs are not verified supplier identities.</p></aside>
+    </section>
+    </section>
+
+    <details class="technical-note">
+      <summary>Technical context and data-grain notes</summary>
+      <p>Pipeline: source CSVs → PostgreSQL → dbt staging and analytical models → Power BI Import model. Sales lines, baskets and coupon redemptions remain at separate grains. Facts are not joined to each other, preventing duplicated revenue and conflated redemption events.</p>
+      <a href="https://github.com/siddharthaananthula/retail-performance-analytics/blob/main/docs/architecture.md" target="_blank" rel="noopener noreferrer">Architecture and local setup <span aria-hidden="true">↗</span></a>
+    </details>
+
+    <footer class="site-footer">
+      <p><a href="data_source.md">Data source: dunnhumby, The Complete Journey.</a></p>
+      <div><a href="https://github.com/siddharthaananthula/retail-performance-analytics" target="_blank" rel="noopener noreferrer">GitHub source</a><a href="https://github.com/siddharthaananthula/retail-performance-analytics/blob/main/docs/dashboard_guide.md" target="_blank" rel="noopener noreferrer">Power BI page guide</a><a href="https://github.com/siddharthaananthula/retail-performance-analytics/blob/main/docs/data_quality.md" target="_blank" rel="noopener noreferrer">Data quality and caveats</a></div>
+    </footer>
+  </main>
+
+  <dialog class="image-dialog" aria-label="Power BI screenshot preview">
+    <div class="dialog-toolbar">
+      <p class="dialog-caption" aria-live="polite"></p>
+      <div><button type="button" class="dialog-prev" aria-label="Previous screenshot">Previous</button><button type="button" class="dialog-next" aria-label="Next screenshot">Next</button><button type="button" class="dialog-close">Close</button></div>
+    </div>
+    <img class="dialog-image" alt="">
+  </dialog>
+</body>
+</html>
