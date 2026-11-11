@@ -1,5 +1,9 @@
 # Retail Performance Analytics
 
+[Live portfolio site](https://siddharthaananthula.github.io/retail-performance-analytics/)
+
+[![dbt quality](https://github.com/siddharthaananthula/retail-performance-analytics/actions/workflows/dbt-quality.yml/badge.svg)](https://github.com/siddharthaananthula/retail-performance-analytics/actions/workflows/dbt-quality.yml)
+
 A supermarket analytics portfolio project using PostgreSQL, dbt and Power BI Desktop. It models sales lines, baskets, coupon redemptions and promotions at their proper grains so reporting does not multiply revenue when a product has several coupon or promotion records.
 
 | Validated result from the local dataset | Value |
@@ -32,7 +36,7 @@ The local Power BI Desktop report has seven business pages covering sales perfor
 
 **Explore the dashboard pages:** [Overview](screenshots/01-overview.png) · [Customers](screenshots/02-customers.png) · [Demographics](screenshots/03-demographics.png) · [Promotions](screenshots/04-promotions.png) · [Products](screenshots/05-products.png) · [Insights](screenshots/06-insights.png) · [Recommendations](screenshots/07-recommendations.png).
 
-These screenshots are static previews of the report, not a publicly hosted interactive dashboard. The data-bearing PBIX is withheld from publication pending review of embedded data and connection settings. Original source CSV files are also excluded. See the [Power BI folder](powerbi/README.md), [dashboard guide](docs/dashboard_guide.md) and [screenshot checklist](screenshots/README.md). Manufacturer IDs are not verified supplier names.
+These screenshots are static previews of the report, not a publicly hosted interactive dashboard. The data-bearing PBIX is withheld from publication pending review of embedded data and connection settings. Original source CSV files are also excluded. See the [Power BI folder](powerbi/README.md), [dashboard guide](docs/dashboard_guide.md) and [published screenshots](screenshots/). Manufacturer IDs are not verified supplier names.
 
 ## Reproduce locally
 

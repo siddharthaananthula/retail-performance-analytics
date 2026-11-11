@@ -596,6 +596,8 @@ By 6 November 2026, the local PBIX contains seven business pages plus DAX Testin
 
 **Decision:** Document the built report, validated business findings and remaining data limitations. Keep the unverified ingestion and CI drafts out of the release until tested. Review embedded data and connection metadata before deciding whether to publish the PBIX. Capture genuine screenshots manually and decide whether to hide the development pages before the public walkthrough.
 
+**Update (12 November 2026):** Genuine screenshots of the seven business pages have now been added to `screenshots/`, and the portfolio site is published on GitHub Pages.
+
 ## D036. Set a publication boundary before adding automation or report files
 
 The publication audit found that the dataset, fixture CSVs and local Power BI Import file need a redistribution-rights and embedded-data review. The documentation and screenshot checklist exist locally but are not yet committed. The ingestion and CI drafts have not passed an isolated local validation. A verified dbt test run is evidence for the existing analytics models, not evidence that the full pipeline can be rebuilt safely from an empty database.

@@ -14,8 +14,8 @@ The brand revenues sum to the $8,057,463.08 recorded sales baseline. The two hou
 | Basket composition | Baskets | Revenue | Share of all sales | Average basket value | Average lines per basket |
 |---|---:|---:|---:|---:|---:|
 | Both Private and National | 157,546 | $6,468,441.00 | 80.28% | $41.06 | 14.58 |
-| National only | 80,763 | $905,664.25 | — | $11.21 | 3.09 |
-| Private only | 38,175 | $683,357.83 | — | $17.90 | 1.27 |
+| National only | 80,763 | $905,664.25 | N/A | $11.21 | 3.09 |
+| Private only | 38,175 | $683,357.83 | N/A | $17.90 | 1.27 |
 
 Mixed-brand baskets are about **57.0%** of the 276,484 baskets and contain more lines on average. Their larger share of revenue is associated with larger basket sizes; brand mixing itself has not been shown to cause higher spending. The three basket groups are mutually exclusive and reconcile to 276,484 baskets and $8,057,463.08 sales.
 
