@@ -603,3 +603,13 @@ By 6 November 2026, the local PBIX contains seven business pages plus DAX Testin
 The publication audit found that the dataset, fixture CSVs and local Power BI Import file need a redistribution-rights and embedded-data review. The documentation and screenshot checklist exist locally but are not yet committed. The ingestion and CI drafts have not passed an isolated local validation. A verified dbt test run is evidence for the existing analytics models, not evidence that the full pipeline can be rebuilt safely from an empty database.
 
 **Decision:** Keep source data, fixture CSVs, the PBIX, credentials, generated caches and Docker data out of ordinary Git staging. Publish reviewed documentation and code only after checking links, paths and secrets. Replace personal setup paths with portable dbt profile instructions, record the unresolved rights question in [data source and reproduction](docs/data_source.md), and validate the loader against a disposable database before considering CI. No analytical SQL, data or report file is changed by this documentation decision.
+
+## D037. Document the final Power BI dashboard corrections (12 November 2026)
+
+**Decision:** The Weekly Sales Trend uses a visual-level filter for weeks 20–101, linear interpolation and a $0 Y-axis start. Weeks 1–19 are excluded while the household panel was still building; approximately 99.7% of households had purchased by week 20. Weeks 1 and 102 are partial, with five and six days respectively. Overview KPI cards remain full-period, including $8.06M in sales.
+
+The Supplier & Product Performance page excludes `KIOSK-GAS` and `MISC SALES TRAN` while retaining `MISC. TRANS.`. The excluded sales are $664,182.32 and the filtered page sales are $7,393,280.76. Manufacturer 69 is labelled `Mfr 69 (private label)` and has a 20.80% share within the filtered Products page, compared with 27.04% across all departments. The updated Manufacturer Sales Share calculation removes manufacturer filters from both `manufacturer_id` and `Manufacturer Display`.
+
+The Customers page replaces the former Repeat Purchasing Rate KPI with Regular shoppers (52+ weeks), defined as the percentage of purchasing households that bought products in at least 52 distinct weeks across the observed period. The result is 48.04%.
+
+The Demographics comparison charts omit the `(Blank)` income category only. Known demographics remain 801 of 2,500 purchasing households, or 32.0%; households with unknown demographics remain included in overall coverage reporting.
